@@ -1,18 +1,21 @@
 #pragma once
 #include"Vector3D.h"
+#include"Line.h"
 class Plane
 {
 	Vector3D<double> point;
 	Vector3D<double> normal;
 	double D;
 public:
-	Plane(const Vector3D<double>&, const Vector3D<double>&);
+	Plane(const Vector3D<double>& p = Vector3D<double>(), const Vector3D<double>& n = Vector3D<double>());
 	~Plane();
-	double Distance(const Vector3D<double>&, const Vector3D<double>&);
+	double Distance(const Vector3D<double>&, const Vector3D<double>&) const;
+	template<class T1>
+	friend Vector3D<T1> TouchPoint(const Plane&, const Line<T1>&);
 };
 
 
-Plane::Plane(const Vector3D<double>& p= Vector3D<double>(), const Vector3D<double>& n = Vector3D<double>())
+Plane::Plane(const Vector3D<double>& p, const Vector3D<double>& n)
 {
 	point = p.Normalize();
 	normal = n.Normalize();
@@ -23,7 +26,13 @@ Plane::~Plane()
 {
 }
 
-double Plane::Distance(const Vector3D<double>& S, const Vector3D<double>& V)
+double Plane::Distance(const Vector3D<double>& S, const Vector3D<double>& V) const
 {
-	return -(Dot(normal, S.Normalize()) + D) / Dot(normal, V.Normalize());
+	return -(Dot(normal, S) + D) / Dot(normal, V.Normalize());
+}
+
+template<class T1>
+Vector3D<T1> TouchPoint(const Plane& P, const Line<T1>& L)
+{
+	return L.GetSource() + L.GetDirect()*P.Distance(L.GetSource(), L.GetDirect());
 }

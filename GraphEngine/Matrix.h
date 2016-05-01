@@ -62,8 +62,7 @@ T Matrix<T, level>::Cofactor(const size_t& a, const size_t& b) const
 		}
 		x++;
 	}
-	Matrix<T, minusone> temp(m);
-	return ((a + b) % 2 ? -1 : 1)*temp.Det();
+	return ((a + b) % 2 ? -1 : 1)*Matrix<T, minusone>(m).Det();
 }
 
 template<class T, size_t level>
