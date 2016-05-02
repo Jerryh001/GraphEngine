@@ -1,5 +1,10 @@
 #pragma once
 #include"Vector3D.h"
 #include"Matrix.h"
-#include"Plane.h"
+#include"SquareMatrix.h"
 #include"Line.h"
+#include"Plane.h"
+#include"Curve.h"
+#include"HermiteCurve.h"
+#include"BezierCurve.h"
+#include"CatmullRomSplines.h"

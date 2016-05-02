@@ -2,6 +2,7 @@
 #include<iostream>
 #include<cmath>
 using namespace std;
+
 template<class T>
 class Vector3D
 {
@@ -26,6 +27,8 @@ public:
 	template<class T1, class T2>
 	friend Vector3D<T1> operator*(Vector3D<T1>, const T2&);
 	template<class T1, class T2>
+	friend Vector3D<T1> operator*(const T2&, Vector3D<T1>);
+	template<class T1, class T2>
 	friend Vector3D<T1> operator/(Vector3D<T1>, const T2&);
 	template<class T>
 	friend istream& operator >> (istream& cin, Vector3D<T>& v);
@@ -36,6 +39,9 @@ public:
 	template<class T1, class T2>
 	friend Vector3D<T1> Cross(const Vector3D<T1>&, const Vector3D<T2>&);
 };
+extern template class Vector3D<int>;
+extern template class Vector3D<float>;
+extern template class Vector3D<double>;
 template<class T1, class T2>
 Vector3D<T1> CrossNormalize(const Vector3D<T1>&, const Vector3D<T2>&);
 
@@ -102,7 +108,7 @@ Vector3D<T1> operator+(Vector3D<T1> v1, const Vector3D<T2>& v2)
 	return v1 += v2;
 }
 template<class T1, class T2>
-Vector3D<T1> operator+=(Vector3D<T1>& v1,const Vector3D<T2>& v2)
+Vector3D<T1> operator+=(Vector3D<T1>& v1, const Vector3D<T2>& v2)
 {
 	v1.x += v2.x;
 	v1.y += v2.y;
@@ -123,6 +129,11 @@ Vector3D<T1> operator*(Vector3D<T1> v, const T2& a)
 	return v;
 }
 template<class T1, class T2>
+Vector3D<T1> operator*(const T2& a, Vector3D<T1> v)
+{
+	return v*a;
+}
+template<class T1, class T2>
 Vector3D<T1> operator/(Vector3D<T1> v, const T2& a)
 {
 	v.x /= a;
@@ -136,9 +147,9 @@ istream& operator >> (istream& cin, Vector3D<T>& v)
 	return cin >> v.x >> v.y >> v.z;
 }
 template<class T>
-ostream& operator<<(ostream& cout,const Vector3D<T>& v)
+ostream& operator<<(ostream& cout, const Vector3D<T>& v)
 {
-	return cout << v.x<<" " << v.y<<" " << v.z;
+	return cout << v.x << " " << v.y << " " << v.z;
 }
 template<class T1, class T2>
 T1 Dot(const Vector3D<T1>& v1, const Vector3D<T2>& v2)

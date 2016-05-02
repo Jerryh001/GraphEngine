@@ -147,14 +147,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BezierCurve.h" />
+    <ClInclude Include="CatmullRomSplines.h" />
+    <ClInclude Include="Curve.h" />
     <ClInclude Include="GraphEngine.h" />
+    <ClInclude Include="HermiteCurve.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="Matrix.h" />
+    <ClInclude Include="SquareMatrix.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="Vector3D.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BezierCurve.cpp" />
+    <ClCompile Include="CatmullRomSplines.cpp" />
+    <ClCompile Include="Curve.cpp" />
+    <ClCompile Include="HermiteCurve.cpp" />
+    <ClCompile Include="Line.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Plane.cpp" />
+    <ClCompile Include="Vector3D.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

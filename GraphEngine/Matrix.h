@@ -1,112 +1,133 @@
 #pragma once
 #include<iostream>
-#define size (level > 0 ? level : 1)
+#include<stdexcept>
 using namespace std;
-template<class T, size_t level>
+#define row_s (row > 0 ? row : 1)
+#define column_s (column > 0 ? column : 1)
+template<class T,size_t row,size_t column>
 class Matrix
 {
-	T elements[size][size];
+	T elements[row_s][column_s];
 public:
-	Matrix();
-	Matrix(T m[size][size]);
+	Matrix(const T m[row_s][column_s]=nullptr);
+	template<class T2>
+	Matrix(const Matrix<T2, row, column>&);
 	~Matrix();
-	T Cofactor(const size_t&, const size_t&) const;
-	T Det() const;
-	Matrix<double, level> Inverse() const;
-	template<class T, size_t level>
-	friend ostream& operator<<(ostream&, const Matrix<T, level>&);
-
+	Matrix<T, column, row> Transpose();
+	template<class T2>
+	Matrix<T, row, column> operator=(const Matrix<T2, row, column>&);
+	template<class T1, size_t row1, size_t column1, class T2, size_t row2, size_t column2>
+	friend Matrix<T1, row1, column2> operator*(const Matrix<T1, row1, column1>&, const Matrix<T2, row2, column2>&);
+	template<class T, size_t row, size_t column>
+	friend ostream& operator<<(ostream&, const Matrix<T, row, column>&);
+	T operator()(const size_t&, const size_t&) const;
 };
-template<class T, size_t level>
-Matrix<T, level>::Matrix()
-{
-	for (size_t i = 0; i < level; i++)
-	{
-		for (size_t j = 0; j < level; j++)
-		{
-			elements[i][j] = 0;
-		}
-	}
-}
 
-template<class T, size_t level>
-Matrix<T, level>::Matrix(T m[size][size])
+template<class T, size_t row, size_t column>
+Matrix<T, row, column>::Matrix(const T m[row_s][column_s])
 {
-	for (size_t i = 0; i < level; i++)
+	if (m == nullptr) return;
+	for (size_t i = 0; i < row_s; i++)
 	{
-		for (size_t j = 0; j < level; j++)
+		for (size_t j = 0; j < column_s; j++)
 		{
 			elements[i][j] = m[i][j];
 		}
 	}
 }
-
-template<class T, size_t level>
-Matrix<T, level>::~Matrix()
+template<class T, size_t row, size_t column>
+template<class T2>
+Matrix<T, row, column>::Matrix(const Matrix<T2, row, column>& m)
 {
-
-}
-template<class T, size_t level>
-T Matrix<T, level>::Cofactor(const size_t& a, const size_t& b) const
-{
-	const size_t minusone = size > 1 ? (size - 1) : 1;
-	T m[minusone][minusone];
-	for (size_t i = 0, x = 0; i < level; i++)
+	for (size_t i = 0; i < row_s; i++)
 	{
-		if (i == a) continue;
-		for (size_t j = 0, y = 0; j < level; j++)
+		for (size_t j = 0; j < column_s; j++)
 		{
-			if (j == b) continue;
-			m[x][y] = elements[i][j];
-			y++;
-		}
-		x++;
-	}
-	return ((a + b) % 2 ? -1 : 1)*Matrix<T, minusone>(m).Det();
-}
-
-template<class T, size_t level>
-T Matrix<T, level>::Det() const
-{
-	T ans = 0;
-	if (level > 2)
-	{
-		for (size_t i = 0; i < level; i++)
-		{
-			ans += elements[0][i] * Cofactor(0, i);
+			elements[i][j] = m(i)(j);
 		}
 	}
-	else
-	{
-		ans = elements[0][0] * elements[1][1] - elements[1][0] * elements[0][1];
-	}
-	return ans;
 }
-
-template<class T, size_t level>
-Matrix<double, level> Matrix<T, level>::Inverse() const
+template<class T, size_t row, size_t column>
+template<class T2>
+Matrix<T, row, column> Matrix<T, row, column>::operator=(const Matrix<T2, row, column>& m)
 {
-	double temp[level][level];
-	double delta = Det();
-	for (size_t i = 0; i < level; i++)
+	return *this(m);
+}
+template<class T, size_t row, size_t column>
+Matrix<T, row, column>::~Matrix()
+{
+}
+template<class T, size_t row, size_t column>
+Matrix<T, column, row> Matrix<T, row, column>::Transpose()
+{
+	T arr[column_s][row_s];
+	for (size_t i = 0; i < row_s; i++)
 	{
-		for (size_t j = 0; j < level; j++)
+		for (size_t j = 0; j < column_s; j++)
 		{
-			temp[i][j] = Cofactor(j, i) / delta;
+			arr[j][i] = elements[i][j];
 		}
 	}
-	return Matrix<double, level>(temp);
+	return Matrix<T, column, row>(arr);
 }
-template<class T, size_t level>
-ostream& operator<<(ostream& cout, const Matrix<T, level>& m)
+template<class T, size_t row, size_t column>
+T Matrix<T, row, column>::operator()(const size_t& i, const size_t& j) const
 {
-	for (size_t i = 0; i < level; i++)
+	return elements[i][j];
+}
+template<class T1, size_t row1, size_t column1, class T2, size_t row2, size_t column2>
+Matrix<T1, row1, column2> operator*(const Matrix<T1, row1, column1>& m1, const Matrix<T2, row2, column2>& m2)
+{
+	if (row2 != column1)
 	{
-		for (size_t j = 0; j < level; j++)
+		throw invalid_argument("Matrix size not match");
+	}
+	T1 ans[row1][column2] = { 0 };
+	//Matrix<T1, row1, column2> ans;
+	for (size_t i = 0; i < row1; i++)
+	{
+		for (size_t j = 0; j < column2; j++)
 		{
-			cout<<m.elements[i][j]<<" ";
+			for (size_t a = 0; a < column1; a++)
+			{
+				ans[i][j] += (m1(i,a) * m2(a,j));
+			}
+		}
+	}
+	return Matrix<T1, row1, column2>(ans);
+}
+template<size_t row1, size_t column1, class T2, size_t row2, size_t column2>
+Matrix<T2, row1, column2> operator*(const Matrix<double, row1, column1>& m1, const Matrix<T2, row2, column2>& m2)
+{
+	if (row2 != column1)
+	{
+		throw invalid_argument("Matrix size not match");
+	}
+	T2 ans[row1][column2] = { 0 };
+	//Matrix<T1, row1, column2> ans;
+	for (size_t i = 0; i < row1; i++)
+	{
+		for (size_t j = 0; j < column2; j++)
+		{
+			for (size_t a = 0; a < column1; a++)
+			{
+				ans[i][j] += (m1(i, a) * m2(a, j));
+			}
+		}
+	}
+	return Matrix<T2, row1, column2>(ans);
+}
+template<class T, size_t row, size_t column>
+ostream& operator<<(ostream& cout, const Matrix<T, row, column>& m)
+{
+	for (size_t i = 0; i < row; i++)
+	{
+		for (size_t j = 0; j < column; j++)
+		{
+			cout << m.elements[i][j] << " ";
 		}
 		cout << endl;
 	}
 	return cout;
 }
+

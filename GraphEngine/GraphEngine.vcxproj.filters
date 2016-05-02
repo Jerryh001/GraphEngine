@@ -21,18 +21,54 @@
     <ClInclude Include="Vector3D.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
-    <ClInclude Include="Matrix.h">
-      <Filter>標頭檔</Filter>
-    </ClInclude>
     <ClInclude Include="Plane.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
     <ClInclude Include="Line.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
+    <ClInclude Include="SquareMatrix.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="Curve.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="HermiteCurve.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="BezierCurve.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="CatmullRomSplines.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
+      <Filter>原始程式檔</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3D.cpp">
+      <Filter>原始程式檔</Filter>
+    </ClCompile>
+    <ClCompile Include="Line.cpp">
+      <Filter>原始程式檔</Filter>
+    </ClCompile>
+    <ClCompile Include="Plane.cpp">
+      <Filter>原始程式檔</Filter>
+    </ClCompile>
+    <ClCompile Include="Curve.cpp">
+      <Filter>原始程式檔</Filter>
+    </ClCompile>
+    <ClCompile Include="HermiteCurve.cpp">
+      <Filter>原始程式檔</Filter>
+    </ClCompile>
+    <ClCompile Include="BezierCurve.cpp">
+      <Filter>原始程式檔</Filter>
+    </ClCompile>
+    <ClCompile Include="CatmullRomSplines.cpp">
       <Filter>原始程式檔</Filter>
     </ClCompile>
   </ItemGroup>

@@ -13,24 +13,6 @@ public:
 	template<class T1>
 	friend Vector3D<T1> TouchPoint(const Plane&, const Line<T1>&);
 };
-
-
-Plane::Plane(const Vector3D<double>& p, const Vector3D<double>& n)
-{
-	point = p.Normalize();
-	normal = n.Normalize();
-	D = -Dot(n,p);
-}
-
-Plane::~Plane()
-{
-}
-
-double Plane::Distance(const Vector3D<double>& S, const Vector3D<double>& V) const
-{
-	return -(Dot(normal, S) + D) / Dot(normal, V.Normalize());
-}
-
 template<class T1>
 Vector3D<T1> TouchPoint(const Plane& P, const Line<T1>& L)
 {
