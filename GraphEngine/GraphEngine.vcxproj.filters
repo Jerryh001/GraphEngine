@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="原始程式檔\Curve">
+      <UniqueIdentifier>{9a213f0e-ebba-492b-bed0-79c9475c11ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="標頭檔\Curve">
+      <UniqueIdentifier>{cadbe0f4-e415-46d6-962c-380b8aefe049}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GraphEngine.h">
@@ -33,17 +39,20 @@
     <ClInclude Include="Matrix.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
-    <ClInclude Include="Curve.h">
-      <Filter>標頭檔</Filter>
-    </ClInclude>
-    <ClInclude Include="HermiteCurve.h">
+    <ClInclude Include="Quaternion.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
     <ClInclude Include="BezierCurve.h">
-      <Filter>標頭檔</Filter>
+      <Filter>標頭檔\Curve</Filter>
+    </ClInclude>
+    <ClInclude Include="Curve.h">
+      <Filter>標頭檔\Curve</Filter>
+    </ClInclude>
+    <ClInclude Include="HermiteCurve.h">
+      <Filter>標頭檔\Curve</Filter>
     </ClInclude>
     <ClInclude Include="CatmullRomSplines.h">
-      <Filter>標頭檔</Filter>
+      <Filter>標頭檔\Curve</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -59,17 +68,20 @@
     <ClCompile Include="Plane.cpp">
       <Filter>原始程式檔</Filter>
     </ClCompile>
-    <ClCompile Include="Curve.cpp">
-      <Filter>原始程式檔</Filter>
-    </ClCompile>
-    <ClCompile Include="HermiteCurve.cpp">
+    <ClCompile Include="Quaternion.cpp">
       <Filter>原始程式檔</Filter>
     </ClCompile>
     <ClCompile Include="BezierCurve.cpp">
-      <Filter>原始程式檔</Filter>
+      <Filter>原始程式檔\Curve</Filter>
+    </ClCompile>
+    <ClCompile Include="Curve.cpp">
+      <Filter>原始程式檔\Curve</Filter>
     </ClCompile>
     <ClCompile Include="CatmullRomSplines.cpp">
-      <Filter>原始程式檔</Filter>
+      <Filter>原始程式檔\Curve</Filter>
+    </ClCompile>
+    <ClCompile Include="HermiteCurve.cpp">
+      <Filter>原始程式檔\Curve</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

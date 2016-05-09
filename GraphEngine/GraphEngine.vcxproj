@@ -154,6 +154,7 @@
     <ClInclude Include="HermiteCurve.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="Matrix.h" />
+    <ClInclude Include="Quaternion.h" />
     <ClInclude Include="SquareMatrix.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="Vector3D.h" />
@@ -166,6 +167,7 @@
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Plane.cpp" />
+    <ClCompile Include="Quaternion.cpp" />
     <ClCompile Include="Vector3D.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

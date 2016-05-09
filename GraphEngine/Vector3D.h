@@ -9,14 +9,15 @@ class Vector3D
 	T elements[4];
 	T &x = elements[0], &y = elements[1], &z = elements[2], &w = elements[3];
 public:
-	Vector3D(const T& a=0, const T& b=0, const T& c=0);
+	Vector3D(const T& a=0, const T& b=0, const T& c=0, const T& d=0);
 	Vector3D(const Vector3D<T>&);
 	template<class T2>
 	Vector3D(const Vector3D<T2>&);
 	~Vector3D();
 	T Length() const;
 	Vector3D<T> Normalize() const;
-	T* GetArray() const;
+	const T* GetArray() const;
+	T operator()(const int&) const;
 	Vector3D<T> operator=(const Vector3D<T>&);
 	template<class T1,class T2>
 	friend Vector3D<T1> operator+(Vector3D<T1>, const Vector3D<T2>&);
@@ -47,11 +48,12 @@ Vector3D<T1> CrossNormalize(const Vector3D<T1>&, const Vector3D<T2>&);
 
 
 template<class T>
-Vector3D<T>::Vector3D(const T& a, const T& b, const T& c)
+Vector3D<T>::Vector3D(const T& a, const T& b, const T& c, const T& d)
 {
 	x = a;
 	y = b;
 	z = c;
+	w = d;
 }
 template<class T>
 Vector3D<T>::Vector3D(const Vector3D<T>& v)
@@ -59,15 +61,17 @@ Vector3D<T>::Vector3D(const Vector3D<T>& v)
 	x = v.x;
 	y = v.y;
 	z = v.z;
+	w = v.w;
 }
 template<class T>
 template<class T2>
 Vector3D<T>::Vector3D(const Vector3D<T2>& v)
 {
-	T2* arr = v.GetArray();
+	const T2* arr = v.GetArray();
 	x = arr[0];
 	y = arr[1];
 	z = arr[2];
+	w = arr[3];
 }
 template<class T>
 Vector3D<T>::~Vector3D()
@@ -90,9 +94,14 @@ Vector3D<T> Vector3D<T>::Normalize() const
 }
 
 template<class T>
-T* Vector3D<T>::GetArray() const
+const T* Vector3D<T>::GetArray() const
 {
-	return (T*)&elements;
+	return &elements[0];
+}
+template<class T>
+T Vector3D<T>::operator()(const int& i)const
+{
+	return elements[i];
 }
 template<class T>
 Vector3D<T> Vector3D<T>::operator=(const Vector3D<T>& v)
@@ -113,6 +122,7 @@ Vector3D<T1> operator+=(Vector3D<T1>& v1, const Vector3D<T2>& v2)
 	v1.x += v2.x;
 	v1.y += v2.y;
 	v1.z += v2.z;
+	v1.w += v2.w;
 	return v1;
 }
 template<class T1, class T2>
@@ -154,13 +164,13 @@ ostream& operator<<(ostream& cout, const Vector3D<T>& v)
 template<class T1, class T2>
 T1 Dot(const Vector3D<T1>& v1, const Vector3D<T2>& v2)
 {
-	return v1.x*v2.x + v1.y*v2.y + v1.z*v2.z;
+	return v1.x*v2.x + v1.y*v2.y + v1.z*v2.z+v1.w*v2.w;
 }
 
 template<class T1, class T2>
 Vector3D<T1> Cross(const Vector3D<T1>& v1, const Vector3D<T2>& v2)
 {
-	return Vector3D<T>(v1.y*v2.z - v2.y*v1.z, v1.z*v2.x - v2.z*v1.x, v1.x*v2.y - v2.x*v1.y);
+	return Vector3D<T1>(v1.y*v2.z - v2.y*v1.z, v1.z*v2.x - v2.z*v1.x, v1.x*v2.y - v2.x*v1.y);
 }
 
 template<class T1, class T2>

@@ -3,9 +3,8 @@
 #include"Line.h"
 class Plane
 {
-	Vector3D<double> point;
 	Vector3D<double> normal;
-	double D;
+	//double D;
 public:
 	Plane(const Vector3D<double>& p = Vector3D<double>(), const Vector3D<double>& n = Vector3D<double>());
 	~Plane();
