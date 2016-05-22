@@ -82,7 +82,7 @@ int main()
 	H = HermiteCurve(HP1, HP2, T1, T2);
 	B = BezierCurve(BP1, BP2, BP3, BP4);
 	C = vector<Vector3D<double>>({ CP0, CP1, CP2, CP3, CP4, CP5 });
-	Quaternion q1(90, { 0,0,1 }), q2(45, { 1,0,0 });
+	Quaternion q1(90, Vector3D<double>{ 0,0,1 }), q2(45, Vector3D<double>{ 1, 0, 0 });
 	cout << q1 << endl
 		<< q2 << endl
 		<< q1 + q2 << endl

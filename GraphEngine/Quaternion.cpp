@@ -1,7 +1,7 @@
 #define _USE_MATH_DEFINES
 #include<cmath>
+#include "Vector3D.h"
 #include "Quaternion.h"
-#include"Vector3D.h"
 Quaternion::Quaternion(const double & degangle, const Vector3D<double>& axis)
 {
 	Vector3D<double> a2 = axis.Normalize();
@@ -25,28 +25,28 @@ Quaternion::~Quaternion()
 {
 }
 
-double Quaternion::Magnitude()
+double Quaternion::Magnitude() const
 {
 	return sqrt(w*w + x*x + y*y + z*z);
 }
 
-Quaternion Quaternion::Normalize()
+Quaternion Quaternion::Normalize() const
 {
 	return *this / (this->Magnitude());
 }
 
-Quaternion Quaternion::Conjugate()
+Quaternion Quaternion::Conjugate() const
 {
 	return Quaternion(w, -x,-y,-z);
 }
 
-Quaternion Quaternion::Inverse()
+Quaternion Quaternion::Inverse() const
 {
 	double l = Magnitude();
 	return Conjugate()/(l*l);
 }
 
-Quaternion Quaternion::operator/(const double& a)
+Quaternion Quaternion::operator/(const double& a) const
 {
 	return Quaternion(w / a,  x / a,y / a,z / a );
 }

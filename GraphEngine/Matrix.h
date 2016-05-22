@@ -7,6 +7,7 @@ using namespace std;
 template<class T,size_t row,size_t column>
 class Matrix
 {
+protected:
 	T elements[row_s][column_s];
 public:
 	Matrix(const T m[row_s][column_s]=nullptr);
