@@ -10,3 +10,4 @@
 #include"CatmullRomSplines.h"
 #include"Quaternion.h"
 #include"Slerp.h"
+#include"Object.h"

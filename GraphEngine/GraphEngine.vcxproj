@@ -154,6 +154,7 @@
     <ClInclude Include="HermiteCurve.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="Matrix.h" />
+    <ClInclude Include="Object.h" />
     <ClInclude Include="Quaternion.h" />
     <ClInclude Include="Slerp.h" />
     <ClInclude Include="SquareMatrix.h" />
@@ -167,6 +168,7 @@
     <ClCompile Include="HermiteCurve.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Object.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Quaternion.cpp" />
     <ClCompile Include="Slerp.cpp" />
