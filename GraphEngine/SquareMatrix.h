@@ -8,9 +8,13 @@ class SquareMatrix:public Matrix<T,level,level>
 {
 	T elements[size_s][size_s];
 public:
-	SquareMatrix(T m[size_s][size_s] = { 0 });
+	SquareMatrix();
+	template<class T2>
+	SquareMatrix(T2 m[size_s][size_s] = nullptr);
 	template<class T2>
 	SquareMatrix(const SquareMatrix<T2, level>&);
+	template<class T2>
+	SquareMatrix(const Matrix<T2, level,level>&);
 	~SquareMatrix();
 	T Cofactor(const size_t&, const size_t&) const;
 	T Det() const;
@@ -21,13 +25,23 @@ public:
 
 
 template<class T, size_t level>
-SquareMatrix<T, level>::SquareMatrix(T m[size_s][size_s]) :Matrix(m)
+template<class T2>
+SquareMatrix<T, level>::SquareMatrix(T2 m[size_s][size_s]) :Matrix(m)
 {
 
 }
 template<class T, size_t level>
 template<class T2>
-SquareMatrix<T, level>::SquareMatrix(const SquareMatrix<T2, level>& m):matrix(m)
+SquareMatrix<T, level>::SquareMatrix(const SquareMatrix<T2, level>& m):Matrix(m)
+{
+}
+template<class T, size_t level>
+template<class T2>
+inline SquareMatrix<T, level>::SquareMatrix(const Matrix<T2, level, level>& m):Matrix(m)
+{
+}
+template<class T, size_t level>
+inline SquareMatrix<T, level>::SquareMatrix()
 {
 }
 template<class T, size_t level>

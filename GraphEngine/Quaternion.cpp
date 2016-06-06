@@ -46,6 +46,31 @@ Quaternion Quaternion::Inverse() const
 	return Conjugate()/(l*l);
 }
 
+SquareMatrix<double, 4> Quaternion::GetMatrix() const
+{
+	double m1arr[4][4] =
+	{ w,z,-y,x,
+	-z,w,x,y,
+	y,-x,w,z,
+	-x,-y,-z,w };
+	double m2arr[4][4] =
+	{ w,z,-y,-x,
+	-z,w,x,-y,
+	y,-x,w,-z,
+	x,y,z,w };
+	SquareMatrix<double, 4> M1(m1arr), M2(m2arr);
+	return M1*M2;
+}
+
+Quaternion Quaternion::operator=(const Quaternion & q)
+{
+	w = q.w;
+	x = q.x;
+	y = q.y;
+	z = q.z;
+	return *this;
+}
+
 Quaternion Quaternion::operator/(const double& a) const
 {
 	return Quaternion(w / a,  x / a,y / a,z / a );

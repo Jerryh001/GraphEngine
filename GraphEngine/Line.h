@@ -3,6 +3,7 @@
 template<class T>
 class Line
 {
+	friend class Plane;
 	Vector3D<T> source;
 	Vector3D<T> direct;
 public:

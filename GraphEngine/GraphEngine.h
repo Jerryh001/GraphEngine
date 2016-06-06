@@ -9,3 +9,4 @@
 #include"BezierCurve.h"
 #include"CatmullRomSplines.h"
 #include"Quaternion.h"
+#include"Slerp.h"

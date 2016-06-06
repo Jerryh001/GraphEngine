@@ -10,22 +10,25 @@ class Matrix
 protected:
 	T elements[row_s][column_s];
 public:
-	Matrix(const T m[row_s][column_s]=nullptr);
+	Matrix();
+	template<class T2>
+	Matrix(const T2 m[row_s][column_s]=nullptr);
 	template<class T2>
 	Matrix(const Matrix<T2, row, column>&);
 	~Matrix();
 	Matrix<T, column, row> Transpose();
 	template<class T2>
 	Matrix<T, row, column> operator=(const Matrix<T2, row, column>&);
-	template<class T1, size_t row1, size_t column1, class T2, size_t row2, size_t column2>
-	friend Matrix<T1, row1, column2> operator*(const Matrix<T1, row1, column1>&, const Matrix<T2, row2, column2>&);
+	template<class T1, size_t row1, size_t column1, class T2, size_t column2>
+	friend Matrix<T1, row1, column2> operator*(const Matrix<T1, row1, column1>&, const Matrix<T2, column1, column2>&);
 	template<class T, size_t row, size_t column>
 	friend ostream& operator<<(ostream&, const Matrix<T, row, column>&);
 	T operator()(const size_t&, const size_t&) const;
 };
 
 template<class T, size_t row, size_t column>
-Matrix<T, row, column>::Matrix(const T m[row_s][column_s])
+template<class T2>
+Matrix<T, row, column>::Matrix(const T2 m[row_s][column_s])
 {
 	if (m == nullptr) return;
 	for (size_t i = 0; i < row_s; i++)
@@ -55,6 +58,10 @@ Matrix<T, row, column> Matrix<T, row, column>::operator=(const Matrix<T2, row, c
 	return *this(m);
 }
 template<class T, size_t row, size_t column>
+inline Matrix<T, row, column>::Matrix()
+{
+}
+template<class T, size_t row, size_t column>
 Matrix<T, row, column>::~Matrix()
 {
 }
@@ -76,13 +83,9 @@ T Matrix<T, row, column>::operator()(const size_t& i, const size_t& j) const
 {
 	return elements[i][j];
 }
-template<class T1, size_t row1, size_t column1, class T2, size_t row2, size_t column2>
-Matrix<T1, row1, column2> operator*(const Matrix<T1, row1, column1>& m1, const Matrix<T2, row2, column2>& m2)
+template<class T1, size_t row1, size_t column1, class T2, size_t column2>
+Matrix<T1, row1, column2> operator*(const Matrix<T1, row1, column1>& m1, const Matrix<T2, column1, column2>& m2)
 {
-	if (row2 != column1)
-	{
-		throw invalid_argument("Matrix size not match");
-	}
 	T1 ans[row1][column2] = { 0 };
 	//Matrix<T1, row1, column2> ans;
 	for (size_t i = 0; i < row1; i++)
@@ -97,13 +100,9 @@ Matrix<T1, row1, column2> operator*(const Matrix<T1, row1, column1>& m1, const M
 	}
 	return Matrix<T1, row1, column2>(ans);
 }
-template<size_t row1, size_t column1, class T2, size_t row2, size_t column2>
-Matrix<T2, row1, column2> operator*(const Matrix<double, row1, column1>& m1, const Matrix<T2, row2, column2>& m2)
+template<size_t row1, size_t column1, class T2, size_t column2>
+Matrix<T2, row1, column2> operator*(const Matrix<double, row1, column1>& m1, const Matrix<T2, column1, column2>& m2)
 {
-	if (row2 != column1)
-	{
-		throw invalid_argument("Matrix size not match");
-	}
 	T2 ans[row1][column2] = { 0 };
 	//Matrix<T1, row1, column2> ans;
 	for (size_t i = 0; i < row1; i++)

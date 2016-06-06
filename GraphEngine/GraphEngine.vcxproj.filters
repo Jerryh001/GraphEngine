@@ -54,6 +54,9 @@
     <ClInclude Include="CatmullRomSplines.h">
       <Filter>標頭檔\Curve</Filter>
     </ClInclude>
+    <ClInclude Include="Slerp.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -82,6 +85,9 @@
     </ClCompile>
     <ClCompile Include="HermiteCurve.cpp">
       <Filter>原始程式檔\Curve</Filter>
+    </ClCompile>
+    <ClCompile Include="Slerp.cpp">
+      <Filter>原始程式檔</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

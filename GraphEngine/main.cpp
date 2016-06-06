@@ -5,8 +5,11 @@
 using namespace std;
 Plane pl({ 0,0,0 }, { 0,1,0 });
 Vector3D<float> S(10, 10, 10), V(0, -1, 0);
-Vector3D<double> P1(0, 0, 0), P2(8,10,12), T1(-1, 0, 0), T2(1, 0, 0);
-BezierCurve B;
+Vector3D<double> HP1(0, 0, 0), HP2(8,10,12), T1(-1, 0, 0), T2(1, 0, 0);
+Vector3D<double> BP1(0,0,0), BP2(1,2,3), BP3(5,5,5), BP4(3,4,5);
+Vector3D<double> CP0(-1,-2,-3),CP1(0, 0, 0), CP2(1, 2, 3), CP3(5, 5, 5), CP4(6, 7, 5),CP5(0,5,3);
+Quaternion q1(90, Vector3D<double>{ 0, 0, 1 }), q2(45, Vector3D<double>{ 1, 0, 0 });
+Slerp sl(q1, q2);
 float t = 0;
 void draw()
 {
@@ -24,9 +27,21 @@ void draw()
 	glBegin(GL_POINTS);
 	glVertex3fv(S.GetArray());
 	glEnd();
+
+
+
+	//Slerp
+	glColor3ub(0, 255, 0);
 	glBegin(GL_POINTS);
-	glVertex3dv(B(t).GetArray());
+	
+	glVertex3dv(CP3.Rotate(sl(t)).GetArray());
 	glEnd();
+	glColor3ub(0, 0, 255);
+	glBegin(GL_POINTS);
+	glVertex3dv(CP4.GetArray());
+	glEnd();
+
+
 	glColor3ub(0, 0, 255);
 	glBegin(GL_LINES);
 	glVertex3fv(S.GetArray());
@@ -79,10 +94,7 @@ void glinit()
 }
 int main()
 {
-	H = HermiteCurve(HP1, HP2, T1, T2);
-	B = BezierCurve(BP1, BP2, BP3, BP4);
-	C = vector<Vector3D<double>>({ CP0, CP1, CP2, CP3, CP4, CP5 });
-	Quaternion q1(90, Vector3D<double>{ 0,0,1 }), q2(45, Vector3D<double>{ 1, 0, 0 });
+
 	cout << q1 << endl
 		<< q2 << endl
 		<< q1 + q2 << endl

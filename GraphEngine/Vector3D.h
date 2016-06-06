@@ -2,17 +2,20 @@
 #include<iostream>
 #include<cmath>
 #include"Matrix.h"
+#include"SquareMatrix.h"
 #include"Quaternion.h"
 class Quaternion;
 using namespace std;
 template<class T>
-class Vector3D:public Matrix<T,1,4>
+class Vector3D :public Matrix<T, 1, 4>
 {
-	//friend class Quaternion;
+	friend class Quaternion;
 	T &x = elements[0][0], &y = elements[0][1], &z = elements[0][2], &w = elements[0][3];
 public:
-	Vector3D(const T& a=0, const T& b=0, const T& c=0, const T& d=0);
+	Vector3D(const T& a = 0, const T& b = 0, const T& c = 0, const T& d = 0);
 	Vector3D(const Vector3D<T>&);
+	template<class T2>
+	Vector3D(const Matrix<T2, 1, 4>&);
 	template<class T2>
 	Vector3D(const Vector3D<T2>&);
 	~Vector3D();
@@ -22,10 +25,12 @@ public:
 	Vector3D<T> Rotate(const Quaternion&) const;
 	T operator()(const int&) const;
 	Vector3D<T> operator=(const Vector3D<T>&);
-	template<class T1,class T2>
+	template<class T2>
+	Vector3D<T> operator=(const Vector3D<T2>&);
+	template<class T1, class T2>
 	friend Vector3D<T1> operator+(Vector3D<T1>, const Vector3D<T2>&);
 	template<class T1, class T2>
-	friend Vector3D<T1> operator+=(Vector3D<T1>&,const Vector3D<T2>&);
+	friend Vector3D<T1> operator+=(Vector3D<T1>&, const Vector3D<T2>&);
 	template<class T1, class T2>
 	friend Vector3D<T1> operator-(const Vector3D<T1>&, const Vector3D<T2>&);
 	template<class T1, class T2>
@@ -65,6 +70,15 @@ inline Vector3D<T>::Vector3D(const Vector3D<T>& v)
 }
 template<class T>
 template<class T2>
+inline Vector3D<T>::Vector3D(const Matrix<T2, 1, 4>& m)
+{
+	x = m(0,0);
+	y = m(0, 1);
+	z = m(0,2);
+	w = m(0, 3);
+}
+template<class T>
+template<class T2>
 inline Vector3D<T>::Vector3D(const Vector3D<T2>& v)
 {
 	const T2* arr = v.GetArray();
@@ -72,6 +86,23 @@ inline Vector3D<T>::Vector3D(const Vector3D<T2>& v)
 	y = arr[1];
 	z = arr[2];
 	w = arr[3];
+}
+template<class T>
+inline Vector3D<T> Vector3D<T>::operator=(const Vector3D<T>& v)
+{
+	x = v.x;
+	y = v.y;
+	z = v.z;
+	return *this;
+}
+template<class T>
+template<class T2>
+inline Vector3D<T> Vector3D<T>::operator=(const Vector3D<T2>& v)
+{
+	x = v.x;
+	y = v.y;
+	z = v.z;
+	return *this;
 }
 template<class T>
 inline Vector3D<T>::~Vector3D()
@@ -100,22 +131,18 @@ inline const T* Vector3D<T>::GetArray() const
 template<class T>
 inline Vector3D<T> Vector3D<T>::Rotate(const Quaternion & q) const
 {
-	Quaternion ans = q*Quaternion(this->x, this->y, this->z, 0)*q.Inverse();
-	return Vector3D<T>(ans.w, ans.x, ans.y);
+
+	return Matrix<T,1,4>(*this)*q.GetMatrix();
+	//???
+	//Quaternion ans = q.Inverse()*Quaternion(this->x, this->y, this->z, 0)*q;
+	//return Vector3D<T>(ans.w, ans.x, ans.y);
 }
 template<class T>
 inline T Vector3D<T>::operator()(const int& i)const
 {
 	return elements[0][i];
 }
-template<class T>
-inline Vector3D<T> Vector3D<T>::operator=(const Vector3D<T>& v)
-{
-	x = v.x;
-	y = v.y;
-	z = v.z;
-	return *this;
-}
+
 template<class T1, class T2>
 inline Vector3D<T1> operator+(Vector3D<T1> v1, const Vector3D<T2>& v2)
 {
@@ -141,6 +168,7 @@ inline Vector3D<T1> operator*(Vector3D<T1> v, const T2& a)
 	v.x *= a;
 	v.y *= a;
 	v.z *= a;
+	v.w *= a;
 	return v;
 }
 template<class T1, class T2>
@@ -165,7 +193,7 @@ inline istream& operator >> (istream& cin, Vector3D<T>& v)
 template<class T1, class T2>
 inline T1 Dot(const Vector3D<T1>& v1, const Vector3D<T2>& v2)
 {
-	return v1.x*v2.x + v1.y*v2.y + v1.z*v2.z+v1.w*v2.w;
+	return v1.x*v2.x + v1.y*v2.y + v1.z*v2.z + v1.w*v2.w;
 }
 
 template<class T1, class T2>
